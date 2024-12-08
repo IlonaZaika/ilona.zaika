@@ -753,7 +753,6 @@ section,
   font-weight: 600;
   margin-bottom: 10px;
   text-align: right;
-  float: right;
 }
 
 .resume .resume-item ul {
@@ -798,7 +797,7 @@ section,
   --background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
 }
 
-.projects-slider {
+.slider {
   display: flex;
   gap: 20px;
   overflow-x: auto;
@@ -806,11 +805,11 @@ section,
   padding-bottom: 20px;
 }
 
-.projects-slider::-webkit-scrollbar {
+.slider::-webkit-scrollbar {
   height: 8px;
 }
 
-.projects-slider::-webkit-scrollbar-track {
+.slider::-webkit-scrollbar-track {
   background: #e6e6e6;
 }
 
@@ -838,6 +837,7 @@ section,
 .project-info {
   padding: 15px;
 }
+
 .project-footer {
   padding: 15px;
   display: flex;
@@ -888,6 +888,51 @@ section,
   --background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
 }
 
+.award-image {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: auto;
+  width: 300px;
+  display: table;
+  overflow: hidden;
+}
+.award-info {
+  height: 270px;
+  background: #fff;
+  opacity: 0;
+  display: block;
+  align-content: center;
+}
+
+.award-info h3 {
+  font-size: 20px;
+  text-align: center;
+}
+.award-info p {
+  padding: 20px 0px;
+  text-align: center;
+}
+
+.award-info span {
+  color: var(--default-color);
+  font-size: 16px;
+  display: block;
+  text-align: center;
+}
+@media screen and(max-width: 768px) {
+  .award-info {
+    opacity: 1;
+    background: rgba(#fff, 0.6);
+  }
+}
+
+.award:hover,
+.award-info:hover {
+  opacity: 1;
+}
+
 /*--------------------------------------------------------------
 # Certificates Section
 --------------------------------------------------------------*/
@@ -899,22 +944,16 @@ section,
   --background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
 }
 
-.certificates .certificates-filters {
-  padding: 0;
-  margin: 0 auto 20px auto;
-  list-style: none;
-  text-align: center;
+.certificate-item {
+  margin: 15px 5px;
 }
 
-.certificates .certificates-filters li {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0;
-  font-size: 14px;
-  font-weight: 400;
-  margin: 0 10px;
-  line-height: 1;
-  text-transform: uppercase;
-  margin-bottom: 10px;
-  transition: all 0.3s ease-in-out;
+.certificate-image {
+  width: 70px;
+  height: 70px;
+}
+
+.verify-certificate {
+  color: var(--default-color);
+  padding-left: 10px;
 }

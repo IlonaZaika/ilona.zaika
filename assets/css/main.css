@@ -63,6 +63,10 @@ body {
   font-size: var(--default-font-size);
 }
 
+p {
+  font-family: var(--default-font);
+}
+
 a {
   color: var(--accent-color);
   text-decoration: none;
@@ -666,57 +670,60 @@ section,
   all: unset;
 } */
 
-/*--------------------------------------------------------------
-# Skills Section
---------------------------------------------------------------*/
-.skills {
-  --background-color: color-mix(in srgb, var(--accent-color), transparent 95%);
-}
+/* === Skills: list layout for <li> with header + description === */
 
-.dev-icons {
-  font-size: 3rem;
-}
-
-.dev-icons .list-inline-item i:hover {
-  color: #149ddd;
-}
-
-.skills .progress {
-  height: 60px;
-  display: block;
-  background: none;
-  border-radius: 0;
-}
-
-.skills .progress .skill {
-  color: var(--heading-color);
+/* base list reset (scoped to skills section) */
+.skills .skills-list {
+  list-style: none;
+  margin: 0;
   padding: 0;
-  margin: 0 0 6px 0;
-  text-transform: uppercase;
-  display: block;
-  font-weight: 600;
-  font-family: var(--heading-font);
 }
 
-.skills .progress .skill .val {
-  float: right;
-  font-style: normal;
+/* each item stacks header then description */
+.skills .skills-list li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 12px 0;
 }
 
-.skills .progress-bar-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-  height: 10px;
+/* header combines icon + strong label */
+.skills .li-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.2;
 }
 
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: var(--accent-color);
+/* optional: make the chevron subtle and sized with text */
+.skills .li-header .bi {
+  font-size: 0.95em;
+  opacity: 0.8;
 }
 
-.skills-item {
-  color: var(--heading-color);
+/* keep your existing color for .skills-item (strong) and add weight */
+.skills .skills-item {
+  color: var(--heading-color); /* from your existing rule */
+  font-weight: 700;
+}
+
+/* description under the header */
+.skills .li-desc {
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  line-height: 1.5;
+  /* indent to align with the header text (not the icon).
+     Tweak if your icon size/gap differs */
+  padding-left: calc(8px + 1em);
+}
+
+/* compact spacing on smaller screens */
+@media (max-width: 576px) {
+  .skills .skills-list li {
+    margin: 10px 0;
+  }
+  .skills .li-desc {
+    line-height: 1.45;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -808,30 +815,51 @@ section,
 .slider::-webkit-scrollbar {
   height: 8px;
 }
-
 .slider::-webkit-scrollbar-track {
   background: #e6e6e6;
 }
 
-.project-card {
+.project-card,
+.case-study-card {
   flex: 0 0 auto;
-  width: 300px;
   background: #fff;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   align-content: space-between;
 }
 
-.project-card:hover {
+.project-card {
+  width: 300px;
+}
+.case-study-card {
+  width: 400px;
+}
+
+.project-card:hover,
+.case-study-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
 
 .project-image {
   width: 300px;
   height: 300px;
+  object-fit: cover;
+}
+.case-study-image {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.case-study-header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .project-info {
@@ -847,16 +875,83 @@ section,
 
 .project-title {
   font-size: 18px;
-  margin: 0 0 10px;
+  margin: 0 0 6px;
   color: #333;
 }
 
 .project-description {
-  font-size: 14px;
+  font-size: 16px;
   color: #666;
-  margin-bottom: 15px;
-  font-family: "Cutive Mono";
+  margin: 0;
+  font-family: "Cutive Mono", monospace;
 }
+
+/* meta (date) next to title uses same font but lighter */
+.project-meta {
+  color: #888;
+  font-size: 13px;
+}
+
+/* one-line clamp for the summary text */
+.clamp-1 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Accordion */
+.project-accordion {
+  border-radius: 8px;
+  background: #fafafa;
+  padding: 10px 12px;
+  border: 1px solid #eee;
+}
+
+.project-accordion + .project-accordion {
+  margin-top: 8px;
+}
+
+.project-accordion summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+/* custom chevron */
+.project-accordion summary::after {
+  content: "▸";
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.project-accordion[open] summary::after {
+  transform: rotate(90deg);
+}
+
+/* details content */
+.project-details {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  padding-top: 8px;
+  color: #555;
+  font-size: 14px;
+  font-family: "Cutive Mono", monospace;
+}
+
+.project-details li {
+  margin: 6px 0;
+  line-height: 1.45;
+}
+
+/* footer links */
 .project-footer .social-icons a {
   margin-top: 0;
 }
@@ -877,7 +972,7 @@ section,
 
 .view-project-button::after {
   content: "→";
-  margin-left: 5px;
+  margin-left: 6px;
   font-size: 16px;
 }
 
